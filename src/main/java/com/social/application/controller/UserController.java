@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.social.application.dto.UserDTO;
+import com.social.application.model.Post;
 import com.social.application.model.User;
 import com.social.application.services.UserService;
 
@@ -58,5 +59,11 @@ public class UserController {
 		obj = service.update(obj);
 		//URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.noContent().build();		
+	}
+	
+	@RequestMapping(value = "/{id}/posts", method = RequestMethod.GET)
+	public ResponseEntity<List<Post>> findPost(@PathVariable String id){	
+		User obj = service.findById(id);
+		return ResponseEntity.ok().body(obj.getPosts());
 	}
 }
