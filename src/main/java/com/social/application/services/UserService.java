@@ -24,4 +24,24 @@ public class UserService {
 		Optional<User> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Id Not Found. Check id " + id));
 	}
+	
+	public User insert(User obj) {
+		return repository.insert(obj);
+	}
+	
+	public void delete(String id) {
+		findById(id);
+		repository.deleteById(id);
+	}
+	
+	public User update(User obj) {
+		User newUser = findById(obj.getId());
+		updateUser(newUser, obj);
+		return repository.save(newUser);
+	}
+
+	private void updateUser(User newUser, User obj) {
+		newUser.setName(obj.getName());
+		newUser.setEmail(obj.getEmail());
+	}
 }
